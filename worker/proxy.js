@@ -5,7 +5,7 @@
 
 const FEED = "https://data.austintexas.gov/download/cuc7-ywmd/application/json";
 // Replace with your Pages origin, e.g. "https://yourname.github.io"
-const ALLOWED_ORIGIN = "*";
+const ALLOWED_ORIGIN = "https://kevinsinkar.github.io";
 
 export default {
   async fetch(request) {

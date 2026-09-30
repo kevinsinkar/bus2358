@@ -6,8 +6,8 @@
     BUS_ID: "2358",
     // CapMetro vehicle positions (JSON, refreshed about every 15 seconds)
     LIVE_URL: "https://data.austintexas.gov/download/cuc7-ywmd/application/json",
-    // Optional: your own proxy (see worker/proxy.js) if the browser blocks the direct call (CORS)
-    PROXY_URL: "",
+    // CORS proxy (see worker/proxy.js) — the direct call below is blocked by browsers
+    PROXY_URL: "https://bus2358-feed.kevin-sinkar.workers.dev",
     // A position older than this is treated as "not in service"
     STALE_SECONDS: 600,
   };

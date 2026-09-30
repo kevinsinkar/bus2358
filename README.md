@@ -9,13 +9,27 @@ A static GitHub Pages site. Press the button: it checks CapMetro's live vehicle 
 3. **Actions** tab: run **Update route data** once (Run workflow). It downloads CapMetro's schedule data and commits `data/routes.json` and `data/trips.json` (the route lines). It then refreshes daily.
 4. Open `https://<your-username>.github.io/<repo-name>/` and press the button.
 
-## If it says "Couldn't reach CapMetro's live feed"
+## The CORS proxy (required)
 
-Browsers block requests to sites that don't allow cross-origin access (CORS). I couldn't test this from my side. If it happens:
+Browsers block the direct feed request: CapMetro's download URL answers with a redirect that
+carries no CORS header, so the fetch fails cross-origin. A tiny Cloudflare Worker
+(`worker/proxy.js`) fetches the feed server-side and adds the header. It is deployed at
+`https://bus2358-feed.kevin-sinkar.workers.dev` and set in `CONFIG.PROXY_URL` in `app.js`.
 
-1. Create a free Cloudflare account and a new Worker; paste in `worker/proxy.js`; deploy.
-2. Put the Worker URL in `CONFIG.PROXY_URL` at the top of `app.js` and commit.
-3. Optional: set `ALLOWED_ORIGIN` in the Worker to `https://<your-username>.github.io`.
+To redeploy it after a change (needs a free Cloudflare account):
+
+```
+cd worker
+npx wrangler deploy
+```
+
+`ALLOWED_ORIGIN` in `worker/proxy.js` limits the proxy to this site's origin.
+
+## Local preview
+
+```
+node scripts/dev_server.js    # serves the site at http://localhost:8358 and proxies the feed at /feed
+```
 
 ## Changing the bus
 

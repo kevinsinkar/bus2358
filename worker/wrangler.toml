@@ -1,0 +1,3 @@
+name = "bus2358-feed"
+main = "proxy.js"
+compatibility_date = "2026-09-30"
