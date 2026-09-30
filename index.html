@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bus 2358 Tracker</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+<style>
+  :root { --bg:#f7f7f5; --fg:#1d1d1b; --muted:#6b6b66; --card:#fff; --accent:#e11d48; --ok:#15803d; --off:#6b6b66; --err:#b45309; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#151515; --fg:#f2f2ee; --muted:#9a9a93; --card:#1f1f1e; } }
+  * { box-sizing: border-box; }
+  body { margin:0; font:16px/1.4 system-ui,-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--fg); display:flex; flex-direction:column; height:100dvh; }
+  header { padding:14px 16px 10px; display:flex; flex-wrap:wrap; gap:10px 14px; align-items:center; background:var(--card); border-bottom:1px solid rgba(128,128,128,.25); }
+  h1 { font-size:18px; margin:0; }
+  button { font:inherit; font-weight:600; padding:10px 16px; border:0; border-radius:10px; background:var(--accent); color:#fff; cursor:pointer; }
+  button:disabled { opacity:.6; cursor:wait; }
+  .info { flex-basis:100%; }
+  .status { font-weight:600; }
+  .status.on { color:var(--ok); } .status.off { color:var(--off); } .status.err { color:var(--err); }
+  #detail { color:var(--muted); font-size:14px; }
+  #map { flex:1; min-height:300px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Bus 2358</h1>
+  <button id="locate" type="button">Where is it?</button>
+  <div class="info">
+    <div id="status" class="status" role="status" aria-live="polite">Press the button to check.</div>
+    <div id="detail"></div>
+  </div>
+</header>
+<div id="map"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
