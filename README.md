@@ -33,7 +33,8 @@ node scripts/dev_server.js    # serves the site at http://localhost:8358 and pro
 
 ## Changing the bus
 
-Edit `CONFIG.BUS_ID` in `app.js`.
+Type a bus number into the field on the page. It defaults to 2358 (`CONFIG.BUS_ID` in
+`app.js`). A link with `?bus=1234` opens the page with that number prefilled.
 
 ## How "in service" is decided
 

@@ -78,10 +78,9 @@
   // ---------------- Browser part ----------------
   const $ = (id) => document.getElementById(id);
   const btn = $("locate"), statusEl = $("status"), detailEl = $("detail");
-  // ?bus=1234 overrides the tracked bus (handy for testing with a bus that's in service)
-  const busId = new URLSearchParams(location.search).get("bus") || busId;
-  document.title = "Bus " + busId + " Tracker";
-  document.querySelector("h1").textContent = "Bus " + busId;
+  const busInput = $("bus");
+  // ?bus=1234 in the URL prefills the field (so a filled-in link can be shared)
+  busInput.value = new URLSearchParams(location.search).get("bus") || CONFIG.BUS_ID;
   const map = L.map("map", { zoomControl: true }).setView([30.2672, -97.7431], 11);
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 19,
@@ -124,6 +123,14 @@
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
   async function locate() {
+    if (btn.disabled) return;
+    const busId = busInput.value.trim();
+    if (!busId) {
+      setStatus("Enter a bus number first.", "err");
+      return;
+    }
+    history.replaceState(null, "", busId === CONFIG.BUS_ID ? location.pathname : "?bus=" + encodeURIComponent(busId));
+    document.title = "Bus " + busId + " Tracker";
     btn.disabled = true;
     setStatus("Checking…", "");
     setDetail("");
@@ -179,4 +186,5 @@
   }
 
   btn.addEventListener("click", locate);
+  busInput.addEventListener("keydown", (e) => { if (e.key === "Enter") locate(); });
 })(typeof window !== "undefined" ? window : globalThis);
